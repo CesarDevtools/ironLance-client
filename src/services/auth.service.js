@@ -22,6 +22,11 @@ class AuthService {
   verify() {
     return this.api.get("/auth/verify");
   }
+
+  // PUT / /auth/update Actualiza datos del usuario (excluyendo, email, password y rol)
+  updateProfile(updatedData) {
+    return this.api.put("/auth/update", updatedData);
+  }
 }
 
 const authService = new AuthService();
