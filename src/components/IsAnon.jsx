@@ -10,7 +10,7 @@ function IsAnon({ children }) {
   if (isLoading) {
     return (
       <Center style={{ height: "100vh" }}>
-        <Loader color="blue" size="xl" type="dots" />
+        <Loader size="xl" type="dots" />
       </Center>
     );
   }
