@@ -5,6 +5,9 @@ import { Routes, Route } from "react-router-dom";
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
 
+//Paginas
+import SignupPage from "./pages/SignupPage/SignupPage";
+
 
 function App() {
   return (
@@ -18,7 +21,7 @@ function App() {
         <Route path="/jobs/:id" element={<div>Job Details</div>} />
 
         {/* --- RUTAS DE INVITADOS (ISANON) --- */}
-        <Route path="/signup" element={<IsAnon><div>Signup Page</div></IsAnon>} />
+        <Route path="/signup" element={<IsAnon><div><SignupPage /></div></IsAnon>} />
         <Route path="/login" element={<IsAnon><div>Login Page</div></IsAnon>} />
 
         {/* --- RUTAS PRIVADAS (ISPRIVATE) --- */}

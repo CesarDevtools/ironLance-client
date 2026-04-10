@@ -11,13 +11,17 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { AuthProviderWrapper } from "./context/auth.context.jsx";
 
 
-const theme = createTheme({
-  primaryColor: "blue",
+const ironhackTheme = createTheme({
+  primaryColor: 'cyan', 
+  colors: {
+    brand: ['#eef3f7', '#dbe6ee', '#b7cde0', '#8fb0cf', '#628db9', '#4672a1', '#37597d', '#203d54', '#1a3246', '#122331'],
+  },
+  defaultRadius: 'md',
 });
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <MantineProvider theme={theme}>
+    <MantineProvider theme={ironhackTheme}>
       <Notifications />
       <ModalsProvider>
         <Router>
