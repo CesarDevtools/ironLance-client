@@ -7,6 +7,7 @@ import IsAnon from "./components/IsAnon";
 
 //Paginas
 import SignupPage from "./pages/SignupPage/SignupPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
 
         {/* --- RUTAS DE INVITADOS (ISANON) --- */}
         <Route path="/signup" element={<IsAnon><div><SignupPage /></div></IsAnon>} />
-        <Route path="/login" element={<IsAnon><div>Login Page</div></IsAnon>} />
+        <Route path="/login" element={<IsAnon><div><LoginPage /></div></IsAnon>} />
 
         {/* --- RUTAS PRIVADAS (ISPRIVATE) --- */}
         <Route path="/profile" element={<IsPrivate><div>My Profile</div></IsPrivate>} />
