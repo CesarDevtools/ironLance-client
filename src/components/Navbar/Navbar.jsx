@@ -11,144 +11,161 @@ import {
   Avatar,
   Menu,
   Box,
-  rem,
+  Burger,
+  Drawer,
+  Stack,
+  Divider
 } from "@mantine/core";
-import {
-  IconSun,
-  IconMoon,
-  IconUser,
-  IconLogout,
-  IconPlus,
+import { useDisclosure } from '@mantine/hooks';
+import { 
+  IconSun, 
+  IconMoon, 
+  IconUser, 
+  IconLogout, 
+  IconPlus
 } from "@tabler/icons-react";
 import classes from "./Navbar.module.css";
 
 function Navbar() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const [opened, { toggle, close }] = useDisclosure(false); // Control para el Burger/Drawer
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logOutUser();
+    close();
     navigate("/");
   };
-  console.log("Estado actual del usuario:", user);
+
+  // Helper para no repetir los links en Navbar y Drawer
+  const NavContent = ({ isMobile = false }) => (
+    <>
+      <Button 
+        component={Link} to="/jobs" variant="subtle" 
+        onClick={close} fullWidth={isMobile} justify={isMobile ? "flex-start" : "center"}
+      >
+        Find Jobs
+      </Button>
+
+      {isLoggedIn && user?.role === "IRONHACKER" && (
+        <Button 
+          component={Link} to="/my-applications" variant="subtle" 
+          onClick={close} fullWidth={isMobile} justify={isMobile ? "flex-start" : "center"}
+        >
+          My Applications
+        </Button>
+      )}
+
+      {isLoggedIn && user?.role === "COMPANY" && (
+        <>
+          <Button 
+            component={Link} to="/my-jobs" variant="subtle" 
+            onClick={close} fullWidth={isMobile} justify={isMobile ? "flex-start" : "center"}
+          >
+            My Jobs
+          </Button>
+          <Button 
+            component={Link} to="/jobs/create" variant="light" 
+            leftSection={<IconPlus size={16} />} 
+            onClick={close} fullWidth={isMobile} justify={isMobile ? "flex-start" : "center"}
+          >
+            Post a Job
+          </Button>
+        </>
+      )}
+    </>
+  );
+
   return (
     <Box component="header" className={classes.header}>
       <Container size="xl" className={classes.inner}>
-        {/* LOGO */}
-        <Text
-          component={Link}
-          to="/"
-          size="xl"
-          fw={900}
-          className={classes.logo}
-          variant="gradient"
-          gradient={{ from: "blue", to: "cyan", deg: 90 }}
-        >
-          IRONLANCE
-        </Text>
+        
+        <Group gap="xs">
+          {/* BURGER (Izquierda del logo en móvil) */}
+          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+          
+          {/* LOGO */}
+          <Text
+            component={Link}
+            to="/"
+            size="xl"
+            fw={900}
+            className={classes.logo}
+            variant="gradient"
+            gradient={{ from: "blue", to: "cyan", deg: 90 }}
+          >
+            IRONLANCE
+          </Text>
+        </Group>
 
-        <Group gap={20}>
-          {/* NAVEGACIÓN PRINCIPAL */}
-          <Group gap={10} visibleFrom="sm">
-            <Button component={Link} to="/jobs" variant="subtle">
-              Find Jobs
-            </Button>
-
-            {isLoggedIn && user?.role === "IRONHACKER" && (
-              <Button component={Link} to="/my-applications" variant="subtle">
-                My Applications
-              </Button>
-            )}
-
-            {isLoggedIn && user?.role === "COMPANY" && (
-              <>
-                <Button component={Link} to="/my-jobs" variant="subtle">
-                  My Jobs
-                </Button>
-                <Button
-                  component={Link}
-                  to="/jobs/create"
-                  variant="light"
-                  leftSection={<IconPlus size={16} />}
-                >
-                  Post a Job
-                </Button>
-              </>
-            )}
+        {/* TODO AL FINAL (Derecha) */}
+        <Group gap="md">
+          
+          {/* NAVEGACIÓN DESKTOP (Ahora aquí dentro para que esté al final) */}
+          <Group gap={5} visibleFrom="sm">
+            <NavContent />
           </Group>
 
+          <Divider orientation="vertical" visibleFrom="sm" />
+
           {/* DARK MODE */}
-          <ActionIcon
-            onClick={() => toggleColorScheme()}
-            variant="default"
-            size="lg"
-          >
-            {colorScheme === "dark" ? (
-              <IconSun size={20} />
-            ) : (
-              <IconMoon size={20} />
-            )}
+          <ActionIcon onClick={() => toggleColorScheme()} variant="default" size="lg">
+            {colorScheme === "dark" ? <IconSun size={20} /> : <IconMoon size={20} />}
           </ActionIcon>
 
-          {/* SECCIÓN DE USUARIO */}
-          <Group gap="md">
+          {/* SECCIÓN DE USUARIO / ACCESO */}
+          <Group gap="xs">
             {isLoggedIn ? (
-              <Group gap="xs">
-                {/* DROPDOWN DE PERFIL */}
-                <Menu shadow="md" width={200} trigger="hover" openDelay={100}>
+              <>
+                <Text size="sm" fw={500} visibleFrom="sm" c="dimmed">
+                  Welcome, <Text span c="blue" fw={700}>{user.name}</Text>
+                </Text>
+                <Menu shadow="md" width={200} trigger="hover">
                   <Menu.Target>
-                    <Avatar
-                      color="blue"
-                      radius="xl"
-                      size="sm"
-                      style={{ cursor: "pointer" }}
-                    >
+                    <Avatar color="blue" radius="xl" size="sm" style={{ cursor: "pointer" }}>
                       <IconUser size={18} />
                     </Avatar>
                   </Menu.Target>
-
                   <Menu.Dropdown>
-                    <Menu.Label>Settings</Menu.Label>
-                    <Menu.Item
-                      leftSection={<IconUser style={{ width: rem(14) }} />}
-                      component={Link}
-                      to="/profile"
-                    >
-                      Profile
-                    </Menu.Item>
+                    <Menu.Item component={Link} to="/profile" leftSection={<IconUser size={14} />}>Profile</Menu.Item>
                     <Menu.Divider />
-                    <Menu.Item
-                      color="red"
-                      leftSection={<IconLogout style={{ width: rem(14) }} />}
-                      onClick={handleLogout}
-                    >
-                      Logout
-                    </Menu.Item>
+                    <Menu.Item color="red" onClick={handleLogout} leftSection={<IconLogout size={14} />}>Logout</Menu.Item>
                   </Menu.Dropdown>
                 </Menu>
-
-                {/* MENSAJE DE BIENVENIDA */}
-                <Text size="sm" fw={500} visibleFrom="xs" c="dimmed">
-                  Welcome,{" "}
-                  <Text span c="blue" fw={700}>
-                    {user.name}
-                  </Text>
-                </Text>
-              </Group>
+              </>
             ) : (
-              <Group gap={10}>
-                <Button component={Link} to="/login" variant="default">
-                  Login
-                </Button>
-                <Button component={Link} to="/signup">
-                  Signup
-                </Button>
+              <Group gap={10} visibleFrom="xs">
+                <Button component={Link} to="/login" variant="default">Login</Button>
+                <Button component={Link} to="/signup">Signup</Button>
               </Group>
             )}
           </Group>
         </Group>
       </Container>
+
+      {/* DRAWER (Menú lateral móvil - Se mantiene igual) */}
+      <Drawer
+        opened={opened}
+        onClose={close}
+        size="70%"
+        padding="md"
+        title="Navigation"
+        hiddenFrom="sm"
+        zIndex={1000000}
+      >
+        <Stack gap="sm">
+          <Divider my="sm" />
+          <NavContent isMobile={true} />
+          {!isLoggedIn && (
+            <>
+              <Divider my="sm" />
+              <Button component={Link} to="/login" variant="default" onClick={close}>Login</Button>
+              <Button component={Link} to="/signup" onClick={close}>Signup</Button>
+            </>
+          )}
+        </Stack>
+      </Drawer>
     </Box>
   );
 }
