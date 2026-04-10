@@ -8,12 +8,13 @@ import IsAnon from "./components/IsAnon";
 //Paginas
 import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import Navbar from "./components/Navbar/Navbar";
 
 
 function App() {
   return (
     <div className="App">
-      {/* <Navbar /> */}
+       <Navbar /> 
 
       <Routes>
         {/* --- RUTAS PÚBLICAS --- */}
