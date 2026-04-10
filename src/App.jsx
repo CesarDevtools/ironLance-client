@@ -9,6 +9,7 @@ import IsAnon from "./components/IsAnon";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import Navbar from "./components/Navbar/Navbar";
+import LandingPage from "./pages/LandingPage/LandingPage";
 
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
 
       <Routes>
         {/* --- RUTAS PÚBLICAS --- */}
-        <Route path="/" element={<div>Landing Page</div>} />
+        <Route path="/" element={<div> <LandingPage /></div>} />
         <Route path="/jobs" element={<div>Jobs Board</div>} />
         <Route path="/jobs/:id" element={<div>Job Details</div>} />
 

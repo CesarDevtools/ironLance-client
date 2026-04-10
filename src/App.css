@@ -1,9 +1,8 @@
 :root {
-  --navbar-height: 70px; /* Definimos la altura una sola vez */
+  --navbar-height: 70px; 
 }
 
 .App {
   padding-top: var(--navbar-height);
   min-height: 100vh;
-  background-color: #f8f9fa; /* Un gris muy suave estilo Ironhack */
 }
