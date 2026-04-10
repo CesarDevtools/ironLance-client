@@ -5,11 +5,14 @@ import { Routes, Route } from "react-router-dom";
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
 
+// Componentes
+import Navbar from "./components/Navbar/Navbar";
+
 //Paginas
 import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import Navbar from "./components/Navbar/Navbar";
 import LandingPage from "./pages/LandingPage/LandingPage";
+import JobBoardPage from "./pages/JobsBoardPage/JobsBoardPage";
 
 
 function App() {
@@ -20,7 +23,7 @@ function App() {
       <Routes>
         {/* --- RUTAS PÚBLICAS --- */}
         <Route path="/" element={<div> <LandingPage /></div>} />
-        <Route path="/jobs" element={<div>Jobs Board</div>} />
+        <Route path="/jobs" element={<div><JobBoardPage /></div>} />
         <Route path="/jobs/:id" element={<div>Job Details</div>} />
 
         {/* --- RUTAS DE INVITADOS (ISANON) --- */}
