@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // <--- Importamos Link
+import { Link } from "react-router-dom";
 import jobsService from "../../services/jobs.service"; 
 import { 
   Container, 
@@ -16,7 +16,8 @@ import {
   Center, 
   Loader, 
   Button,
-  ThemeIcon 
+  ThemeIcon,
+  Avatar // <--- Añadido para el logo de la empresa
 } from "@mantine/core";
 import { 
   IconSearch, 
@@ -90,9 +91,35 @@ function JobBoardPage() {
             const levelInfo = getLevelBadge(job.level);
             
             return (
-              <Paper key={job._id} withBorder p="xl" radius="md" shadow="sm">
+              <Paper 
+                key={job._id} 
+                withBorder 
+                p="xl" 
+                radius="md" 
+                shadow="sm"
+                style={{
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                  cursor: 'default'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-4px)";
+                  e.currentTarget.style.boxShadow = "var(--mantine-shadow-md)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "var(--mantine-shadow-sm)";
+                }}
+              >
                 <Stack gap="xs">
                   <Box>
+                    {/* LOGO + NOMBRE DE EMPRESA */}
+                    <Group gap="xs" mb={4}>
+                      <Avatar src={job.owner?.logo} size="xs" radius="xs" />
+                      <Text size="xs" fw={700} c="dimmed" tt="uppercase">
+                        {job.owner?.companyName || "Company"}
+                      </Text>
+                    </Group>
+
                     <Title order={3} c="blue.7">{job.title}</Title>
                     <Group gap={5} mt={4}>
                       <IconClock size={14} color="gray" />
