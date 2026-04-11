@@ -17,7 +17,7 @@ import {
   Loader, 
   Button,
   ThemeIcon,
-  Avatar // <--- Añadido para el logo de la empresa
+  Avatar 
 } from "@mantine/core";
 import { 
   IconSearch, 

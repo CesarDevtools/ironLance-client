@@ -13,6 +13,7 @@ import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import JobBoardPage from "./pages/JobsBoardPage/JobsBoardPage";
+import JobDetailsPage from "./pages/JobDetailsPage/JobDetailsPage";
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
         {/* --- RUTAS PÚBLICAS --- */}
         <Route path="/" element={<div> <LandingPage /></div>} />
         <Route path="/jobs" element={<div><JobBoardPage /></div>} />
-        <Route path="/jobs/:id" element={<div>Job Details</div>} />
+        <Route path="/jobs/:id" element={<div><JobDetailsPage /></div>} />
 
         {/* --- RUTAS DE INVITADOS (ISANON) --- */}
         <Route path="/signup" element={<IsAnon><div><SignupPage /></div></IsAnon>} />
