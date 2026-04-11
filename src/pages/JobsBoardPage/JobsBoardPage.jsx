@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; // <--- Importamos Link
 import jobsService from "../../services/jobs.service"; 
 import { 
   Container, 
@@ -134,7 +135,14 @@ function JobBoardPage() {
                       <IconMapPin size={16} color="red" />
                       <Text size="sm" fw={500}>{job.location}</Text>
                     </Group>
-                    <Button variant="light" radius="xl" size="xs">
+                    
+                    <Button 
+                      component={Link} 
+                      to={`/jobs/${job._id}`} 
+                      variant="light" 
+                      radius="xl" 
+                      size="xs"
+                    >
                       View Details
                     </Button>
                   </Group>
