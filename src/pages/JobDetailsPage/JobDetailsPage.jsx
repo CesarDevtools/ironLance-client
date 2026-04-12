@@ -13,7 +13,7 @@ import { notifications } from '@mantine/notifications';
 import { 
   IconMapPin, IconCoin, IconWorld, 
   IconArrowLeft, IconBriefcase, IconCalendar, IconSend,
-  IconCheck, IconX // 
+  IconCheck, IconX  
 } from "@tabler/icons-react";
 import dayjs from "dayjs";
 
@@ -60,7 +60,7 @@ function JobDetailsPage() {
       .then(() => {
         setSending(false);
         close();
-        setMessage(""); // Limpiamos el mensaje para la próxima vez
+        setMessage(""); 
         
         // NOTIFICACIÓN DE ÉXITO
         notifications.show({
