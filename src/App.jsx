@@ -16,6 +16,7 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import JobBoardPage from "./pages/JobsBoardPage/JobsBoardPage";
 import JobDetailsPage from "./pages/JobDetailsPage/JobDetailsPage";
 import MyApplicationsPage from "./pages/MyApplicationsPage/MyApplicationsPage";
+import JobApplicantsPage from "./pages/JobApplicantsPage/JobApplicantsPage";
 
 
 function App() {
@@ -41,10 +42,6 @@ function App() {
           path="/my-applications" 
           element={<IsPrivate allowedRoles={["IRONHACKER"]}><div><MyApplicationsPage /></div></IsPrivate>} 
         />
-        <Route 
-          path="/my-applications/:id" 
-          element={<IsPrivate allowedRoles={["IRONHACKER"]}><div>Application Details</div></IsPrivate>} 
-        />
 
         {/* Específicas: COMPANY */}
         <Route 
@@ -60,10 +57,14 @@ function App() {
           element={<IsPrivate allowedRoles={["COMPANY"]}><div>Edit Job</div></IsPrivate>} 
         />
         <Route 
-          path="/jobs/:id/applicants" 
-          element={<IsPrivate allowedRoles={["COMPANY"]}><div>Lista de Aplicantes (Gestión)</div></IsPrivate>} 
+          path="/jobs/:jobId/applicants" 
+          element={<IsPrivate allowedRoles={["COMPANY"]}><JobApplicantsPage /></IsPrivate>} 
         />
 
+        <Route 
+          path="/applications/:id" 
+          element={<IsPrivate allowedRoles={["COMPANY"]}><div>Application Details</div></IsPrivate>} 
+        />
         {/* 404 */}
         <Route path="*" element={<div>404 - Not Found</div>} />
       </Routes>
