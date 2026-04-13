@@ -161,7 +161,7 @@ function MyJobsPage() {
                       <Menu.Label>Actions</Menu.Label>
                       <Menu.Item
                         component={Link}
-                        to={`/jobs/${job._id}/edit`}
+                        to={`/jobs/edit/${job._id}`}
                         leftSection={<IconEdit size={14} />}
                       >
                         Edit Job
