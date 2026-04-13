@@ -15,6 +15,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import JobBoardPage from "./pages/JobsBoardPage/JobsBoardPage";
 import JobDetailsPage from "./pages/JobDetailsPage/JobDetailsPage";
+import MyApplicationsPage from "./pages/MyApplicationsPage/MyApplicationsPage";
 
 
 function App() {
@@ -38,7 +39,7 @@ function App() {
         {/* Específicas: IRONHACKER */}
         <Route 
           path="/my-applications" 
-          element={<IsPrivate allowedRoles={["IRONHACKER"]}><div>My Applications (List)</div></IsPrivate>} 
+          element={<IsPrivate allowedRoles={["IRONHACKER"]}><div><MyApplicationsPage /></div></IsPrivate>} 
         />
         <Route 
           path="/my-applications/:id" 
