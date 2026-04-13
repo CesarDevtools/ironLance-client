@@ -16,6 +16,9 @@ import {
   ThemeIcon,
   Divider,
   Box,
+  TextInput,
+  Paper,
+  ActionIcon,
 } from "@mantine/core";
 import { Link } from "react-router-dom";
 import {
@@ -24,12 +27,15 @@ import {
   IconBuildingCommunity,
   IconChevronRight,
   IconInfoCircle,
+  IconSearch,
+  IconX,
 } from "@tabler/icons-react";
 import dayjs from "dayjs";
 
 function MyApplicationsPage() {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState(""); 
 
   useEffect(() => {
     applicationsService
@@ -44,6 +50,12 @@ function MyApplicationsPage() {
       });
   }, []);
 
+  // Lógica de filtrado: filtramos las aplicaciones por el nombre de la compañía
+  const filteredApplications = applications.filter((app) =>
+    app.job?.owner?.companyName
+      ?.toLowerCase()
+      .includes(searchQuery.toLowerCase()),
+  );
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -52,7 +64,7 @@ function MyApplicationsPage() {
       case "REJECTED":
         return "red";
       default:
-        return "blue"; 
+        return "blue"; // PENDING
     }
   };
 
@@ -65,13 +77,35 @@ function MyApplicationsPage() {
 
   return (
     <Container size="md" py="xl">
-      <Stack gap="lg">
+      <Stack gap="xl">
         <Box>
           <Title order={1}>My Applications</Title>
           <Text c="dimmed">
             Track the status of your job applications and history
           </Text>
         </Box>
+
+        {/* --- SEARCH BAR --- */}
+        {applications.length > 0 && (
+          <TextInput
+            placeholder="Search by company name..."
+            size="md"
+            leftSection={<IconSearch size={18} stroke={1.5} />}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.currentTarget.value)}
+            rightSection={
+              searchQuery !== "" && (
+                <ActionIcon
+                  variant="subtle"
+                  color="gray"
+                  onClick={() => setSearchQuery("")}
+                >
+                  <IconX size={16} />
+                </ActionIcon>
+              )
+            }
+          />
+        )}
 
         {applications.length === 0 ? (
           <Paper withBorder p="xl" radius="md" ta="center">
@@ -93,9 +127,19 @@ function MyApplicationsPage() {
               Browse Jobs
             </Button>
           </Paper>
+        ) : filteredApplications.length === 0 ? (
+          // Mensaje si la búsqueda no tiene resultados
+          <Center py="xl">
+            <Stack align="center" gap="xs">
+              <Text c="dimmed">No applications found for "{searchQuery}"</Text>
+              <Button variant="subtle" onClick={() => setSearchQuery("")}>
+                Clear search
+              </Button>
+            </Stack>
+          </Center>
         ) : (
-          <SimpleGrid cols={1}>
-            {applications.map((app) => (
+          <SimpleGrid cols={1} gap="md">
+            {filteredApplications.map((app) => (
               <Card
                 key={app._id}
                 withBorder
@@ -158,7 +202,7 @@ function MyApplicationsPage() {
                       <Text size="xs" fw={700} c="dimmed" tt="uppercase" mb={4}>
                         Your Message:
                       </Text>
-                      <Text size="sm" lineClamp={2} italic>
+                      <Text size="sm" lineClamp={2} fs="italic">
                         "{app.message}"
                       </Text>
                     </Box>
