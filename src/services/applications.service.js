@@ -21,7 +21,15 @@ class ApplicationsService {
   }
 
   /**
-   * 3. Ver aplicantes de un Job específico (Sólo Empresas)
+   * 3. Ver detalle de una aplicación específica (Empresa)
+   * @param {String} appId - ID de la aplicación
+   */
+  getApplicationDetails(appId) {
+    return this.api.get(`/applications/${appId}`);
+  }
+
+  /**
+   * 4. Ver aplicantes de un Job específico (Sólo Empresas)
    * @param {String} jobId - ID del puesto de trabajo
    */
   getJobApplications(jobId) {
@@ -29,7 +37,7 @@ class ApplicationsService {
   }
 
   /**
-   * 4. Cambiar el estado de una aplicación (Sólo Empresas)
+   * 5. Cambiar el estado de una aplicación (Sólo Empresas)
    * @param {String} appId - ID de la aplicación
    * @param {String} status - " "PENDING", "IN PROCESS", "REJECTED", "HIRED" "
    */
