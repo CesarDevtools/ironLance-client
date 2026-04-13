@@ -20,6 +20,7 @@ import JobApplicantsPage from "./pages/JobApplicantsPage/JobApplicantsPage";
 import ApplicationDetailsPage from "./pages/ApplicationDetails/ApplicationDetails";
 import MyJobsPage from "./pages/MyJobsPage/MyJobsPage";
 import CreateJobPage from "./pages/CreateJobPage/CreateJobPage";
+import EditJobPage from "./pages/EditJobPage/EditJobPage";
 
 
 function App() {
@@ -57,7 +58,7 @@ function App() {
         />
         <Route 
           path="/jobs/edit/:id" 
-          element={<IsPrivate allowedRoles={["COMPANY"]}><div>Edit Job</div></IsPrivate>} 
+          element={<IsPrivate allowedRoles={["COMPANY"]}><EditJobPage /></IsPrivate>} 
         />
         <Route 
           path="/jobs/:jobId/applicants" 
