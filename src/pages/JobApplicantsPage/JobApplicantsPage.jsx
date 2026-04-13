@@ -56,7 +56,7 @@ function JobApplicantsPage() {
         </Group>
 
         {applications.length === 0 ? (
-          <Paper withBorder p={50} radius="md" ta="center" bg="gray.0">
+          <Paper withBorder p={50} radius="md" ta="center">
             <IconInbox size={50} color="gray" stroke={1.5} />
             <Title order={3} mt="md">No applicants yet</Title>
             <Text c="dimmed">This job offer hasn't received any applications so far.</Text>
