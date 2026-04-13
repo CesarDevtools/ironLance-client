@@ -17,6 +17,7 @@ import JobBoardPage from "./pages/JobsBoardPage/JobsBoardPage";
 import JobDetailsPage from "./pages/JobDetailsPage/JobDetailsPage";
 import MyApplicationsPage from "./pages/MyApplicationsPage/MyApplicationsPage";
 import JobApplicantsPage from "./pages/JobApplicantsPage/JobApplicantsPage";
+import ApplicationDetailsPage from "./pages/ApplicationDetails/ApplicationDetails";
 
 
 function App() {
@@ -63,7 +64,7 @@ function App() {
 
         <Route 
           path="/applications/:id" 
-          element={<IsPrivate allowedRoles={["COMPANY"]}><div>Application Details</div></IsPrivate>} 
+          element={<IsPrivate allowedRoles={["COMPANY"]}><ApplicationDetailsPage /></IsPrivate>} 
         />
         {/* 404 */}
         <Route path="*" element={<div>404 - Not Found</div>} />
