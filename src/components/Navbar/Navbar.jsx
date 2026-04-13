@@ -29,7 +29,7 @@ import classes from "./Navbar.module.css";
 function Navbar() {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  const [opened, { toggle, close }] = useDisclosure(false); // Control para el Burger/Drawer
+  const [opened, { toggle, close }] = useDisclosure(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -38,7 +38,16 @@ function Navbar() {
     navigate("/");
   };
 
-  // Helper para no repetir los links en Navbar y Drawer
+  // Lógica para obtener el nombre a mostrar según el rol y los datos disponibles
+  const getUserName = () => {
+    if (!user) return "";
+    
+    if (user.role === "IRONHACKER") return user.firstName || "Ironhacker";
+    if (user.role === "COMPANY") return user.companyName || "Company";
+
+    return user.name || "User";
+  };
+
   const NavContent = ({ isMobile = false }) => (
     <>
       <Button 
@@ -99,10 +108,9 @@ function Navbar() {
           </Text>
         </Group>
 
-        {/* TODO AL FINAL (Derecha) */}
         <Group gap="md">
           
-          {/* NAVEGACIÓN DESKTOP (Ahora aquí dentro para que esté al final) */}
+          {/* NAVEGACIÓN DESKTOP */}
           <Group gap={5} visibleFrom="sm">
             <NavContent />
           </Group>
@@ -119,7 +127,7 @@ function Navbar() {
             {isLoggedIn ? (
               <>
                 <Text size="sm" fw={500} visibleFrom="sm" c="dimmed">
-                  Welcome, <Text span c="blue" fw={700}>{user.name}</Text>
+                  Welcome, <Text span c="blue" fw={700}>{getUserName()}</Text>
                 </Text>
                 <Menu shadow="md" width={200} trigger="hover">
                   <Menu.Target>
@@ -144,7 +152,7 @@ function Navbar() {
         </Group>
       </Container>
 
-      {/* DRAWER (Menú lateral móvil - Se mantiene igual) */}
+      {/* DRAWER (Menú lateral móvil) */}
       <Drawer
         opened={opened}
         onClose={close}
@@ -156,6 +164,11 @@ function Navbar() {
       >
         <Stack gap="sm">
           <Divider my="sm" />
+          {isLoggedIn && (
+             <Text size="sm" fw={700} px="xs" mb="xs">
+                Hi, {getUserName()}!
+             </Text>
+          )}
           <NavContent isMobile={true} />
           {!isLoggedIn && (
             <>

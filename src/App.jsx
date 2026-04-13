@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar/Navbar";
 
 //Paginas
 import SignupPage from "./pages/SignupPage/SignupPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import JobBoardPage from "./pages/JobsBoardPage/JobsBoardPage";
@@ -32,7 +33,7 @@ function App() {
         <Route path="/login" element={<IsAnon><div><LoginPage /></div></IsAnon>} />
 
         {/* --- RUTAS PRIVADAS (ISPRIVATE) --- */}
-        <Route path="/profile" element={<IsPrivate><div>My Profile</div></IsPrivate>} />
+        <Route path="/profile" element={<IsPrivate><div><ProfilePage /></div></IsPrivate>} />
 
         {/* Específicas: IRONHACKER */}
         <Route 
