@@ -176,7 +176,7 @@ function JobBoardPage() {
                 </Stack>
               ) : user.role === "IRONHACKER" ? (
                 <Stack align="center" ta="center">
-                  <Avatar size="xl" radius="xl" color="blue" src={user.image} />
+                  <Avatar size="xl" radius="xl" color="blue" src={user.logo} />
                   <Box>
                     <Text fw={700} size="lg">Hello, {user.firstName || "Ironhacker"}!</Text>
                     <Text size="xs" c="dimmed">{user.bootcamp || "Student"}</Text>

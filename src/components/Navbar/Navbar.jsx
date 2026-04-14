@@ -131,7 +131,7 @@ function Navbar() {
                 </Text>
                 <Menu shadow="md" width={200} trigger="hover">
                   <Menu.Target>
-                    <Avatar color="blue" radius="xl" size="sm" style={{ cursor: "pointer" }}>
+                    <Avatar src={user.logo} color="blue" radius="xl" size="sm" style={{ cursor: "pointer" }}>
                       <IconUser size={18} />
                     </Avatar>
                   </Menu.Target>
