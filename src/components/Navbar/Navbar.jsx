@@ -129,9 +129,9 @@ function Navbar() {
                 <Text size="sm" fw={500} visibleFrom="sm" c="dimmed">
                   Welcome, <Text span c="blue" fw={700}>{getUserName()}</Text>
                 </Text>
-                <Menu shadow="md" width={200} trigger="hover">
+                <Menu shadow="md" width={200} trigger="hover" offset={20}>
                   <Menu.Target>
-                    <Avatar src={user.logo} color="blue" radius="xl" size="sm" style={{ cursor: "pointer" }}>
+                    <Avatar src={user.logo} color="blue" radius="xl" size="md" style={{ cursor: "pointer" }}>
                       <IconUser size={18} />
                     </Avatar>
                   </Menu.Target>
