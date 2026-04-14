@@ -14,6 +14,7 @@ import {
 } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import PromoCarousel from "../../components/PromoCarousel/PromoCarousel";
 
 dayjs.extend(relativeTime);
 
@@ -242,6 +243,8 @@ function JobBoardPage() {
             <Paper withBorder p="md" radius="md" bg="var(--mantine-color-blue-light)" style={{ borderStyle: 'dashed' }}>
               <Text size="xs" c="blue" fw={700} ta="center">Tip: Use skills in search to find specific roles!</Text>
             </Paper>
+
+            <PromoCarousel />
           </Stack>
         </Grid.Col>
 
