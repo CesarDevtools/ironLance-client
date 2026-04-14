@@ -22,6 +22,9 @@ function JobBoardPage() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
 
+  // Lista de habilidades populares 
+  const popularSkills = ["React", "Python", "Node", "Figma", "Java"];
+
   // Lógica de progreso 
   const calculateProgress = () => {
     if (!user) return 0;
@@ -95,6 +98,31 @@ function JobBoardPage() {
               onChange={(e) => setSearch(e.currentTarget.value)}
               radius="md"
             />
+            {/* POPULAR SKILLS PILLS */}
+            <Group gap="xs">
+              <Text size="xs" fw={700} c="dimmed">Popular skills:</Text>
+              {popularSkills.map((skill) => (
+                <Badge 
+                  key={skill} 
+                  variant="light"  
+                  onClick={() => setSearch(skill)}
+                  style={{
+                    cursor: 'pointer',
+                    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                  }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-4px)";
+                      e.currentTarget.style.boxShadow = "var(--mantine-shadow-md)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "var(--mantine-shadow-sm)";
+                    }}
+                >
+                  {skill}
+                </Badge>
+              ))}
+            </Group>
           </Stack>
 
           <SimpleGrid cols={1} spacing="lg">

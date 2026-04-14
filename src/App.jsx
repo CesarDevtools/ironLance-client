@@ -30,21 +30,21 @@ function App() {
 
       <Routes>
         {/* --- RUTAS PÚBLICAS --- */}
-        <Route path="/" element={<div> <LandingPage /></div>} />
-        <Route path="/jobs" element={<div><JobBoardPage /></div>} />
-        <Route path="/jobs/:id" element={<div><JobDetailsPage /></div>} />
+        <Route path="/" element={ <LandingPage />} />
+        <Route path="/jobs" element={ <JobBoardPage /> } />
+        <Route path="/jobs/:id" element={ <JobDetailsPage /> } />
 
         {/* --- RUTAS DE INVITADOS (ISANON) --- */}
-        <Route path="/signup" element={<IsAnon><div><SignupPage /></div></IsAnon>} />
-        <Route path="/login" element={<IsAnon><div><LoginPage /></div></IsAnon>} />
+        <Route path="/signup" element={<IsAnon> <SignupPage /> </IsAnon>} />
+        <Route path="/login" element={<IsAnon> <LoginPage /> </IsAnon>} />
 
         {/* --- RUTAS PRIVADAS (ISPRIVATE) --- */}
-        <Route path="/profile" element={<IsPrivate><div><ProfilePage /></div></IsPrivate>} />
+        <Route path="/profile" element={<IsPrivate> <ProfilePage /> </IsPrivate>} />
 
         {/* Específicas: IRONHACKER */}
         <Route 
           path="/my-applications" 
-          element={<IsPrivate allowedRoles={["IRONHACKER"]}><div><MyApplicationsPage /></div></IsPrivate>} 
+          element={<IsPrivate allowedRoles={["IRONHACKER"]}> <MyApplicationsPage /> </IsPrivate>} 
         />
 
         {/* Específicas: COMPANY */}
