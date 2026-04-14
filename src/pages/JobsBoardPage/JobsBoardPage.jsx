@@ -5,11 +5,12 @@ import { AuthContext } from "../../context/auth.context";
 import { 
   Container, Title, Text, TextInput, SimpleGrid, Paper, Badge, 
   Group, Stack, Box, Divider, Center, Loader, Button, 
-  ThemeIcon, Avatar, Grid, Progress 
+  ThemeIcon, Avatar, Grid, Progress, Affix, Transition, ActionIcon, rem // Añadidos Affix, Transition, ActionIcon
 } from "@mantine/core";
+import { useWindowScroll } from '@mantine/hooks'; // Añadido hook de scroll
 import { 
   IconSearch, IconCoin, IconMapPin, IconClock, 
-  IconDeviceAnalytics, IconChecklist, IconRocket, IconPlus
+  IconDeviceAnalytics, IconChecklist, IconRocket, IconPlus, IconArrowUp // Añadido IconArrowUp
 } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -21,6 +22,7 @@ function JobBoardPage() {
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [scroll, scrollTo] = useWindowScroll();
 
   // Lista de habilidades populares 
   const popularSkills = ["React", "Python", "Node", "Figma", "Java"];
@@ -244,6 +246,25 @@ function JobBoardPage() {
         </Grid.Col>
 
       </Grid>
+
+      {/* BOTÓN SCROLL TO TOP */}
+      <Affix position={{ bottom: 20, right: 20 }}>
+        <Transition transition="slide-up" mounted={scroll.y > 0}>
+          {(transitionStyles) => (
+            <ActionIcon
+              color="blue"
+              size="xl"
+              radius="xl"
+              variant="filled"
+              style={transitionStyles}
+              onClick={() => scrollTo({ y: 0 })}
+            >
+              <IconArrowUp style={{ width: rem(16), height: rem(16) }} />
+            </ActionIcon>
+          )}
+        </Transition>
+      </Affix>
+
     </Container>
   );
 }
