@@ -29,7 +29,7 @@ function JobBoardPage() {
   const calculateProgress = () => {
     if (!user) return 0;
     let score = 0;
-    const totalFields = user.role === "IRONHACKER" ? 7 : 5; // 
+    const totalFields = user.role === "IRONHACKER" ? 8 : 5; // 
     
     if (user.role === "IRONHACKER") {
       if (user.firstName) score++;
@@ -39,6 +39,7 @@ function JobBoardPage() {
       if (user.campus) score++;
       if (user.linkedinUrl) score++;
       if (user.portfolioUrl) score++;
+      if (user.logo) score++;
     } else {
       if (user.companyName) score++;
       if (user.about) score++;

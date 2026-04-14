@@ -30,7 +30,7 @@ function App() {
 
       <Routes>
         {/* --- RUTAS PÚBLICAS --- */}
-        <Route path="/" element={ <LandingPage />} />
+        <Route path="/" element={ <IsAnon> <LandingPage /> </IsAnon>} />
         <Route path="/jobs" element={ <JobBoardPage /> } />
         <Route path="/jobs/:id" element={ <JobDetailsPage /> } />
 

@@ -18,7 +18,7 @@ function IsAnon({ children }) {
   // 2. Si YA está logueado, no le dejamos estar aquí. 
   // Lo mandamos a la Home o a su Dashboard principal.
   if (isLoggedIn) {
-    return <Navigate to="/" />;
+    return <Navigate to="/jobs" />;
   }
 
   // 3. Si NO está logueado, le dejamos ver el Login/Signup
