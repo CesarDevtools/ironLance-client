@@ -50,8 +50,6 @@ function ProfilePage() {
 
   // 1. Cargar datos actuales del usuario al montar
   useEffect(() => {
-    // Aquí podrías hacer un GET /auth/verify para traer los datos frescos del usuario
-    // o usar una ruta GET /auth/me si la tienes.
     authService
       .verify()
       .then((res) => {
@@ -88,7 +86,8 @@ function ProfilePage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-
+    console.log(formData);
+    
     authService
       .updateProfile(formData)
       .then((response) => {
@@ -135,12 +134,11 @@ function ProfilePage() {
               </Text>
             </Box>
             <Avatar
-              src={user?.role === "COMPANY" ? formData.logo : null}
+              src={formData.logo}
               size="lg"
               radius="xl"
               color="blue"
             >
-              {user?.role === "IRONHACKER" ? formData.firstName[0] : null}
             </Avatar>
           </Group>
           <Divider />
@@ -172,6 +170,13 @@ function ProfilePage() {
                   value={formData.lastName}
                   onChange={handleChange}
                   required
+                />
+                <TextInput
+                  label="Logo URL"
+                  name="logo"
+                  placeholder="https://..."
+                  value={formData.logo}
+                  onChange={handleChange}
                 />
               </SimpleGrid>
             ) : (
