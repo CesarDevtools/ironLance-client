@@ -97,7 +97,7 @@ function Navbar() {
           {/* LOGO */}
           <Text
             component={Link}
-            to="/"
+            to={isLoggedIn ? "/jobs" : "/"}
             size="xl"
             fw={900}
             className={classes.logo}
