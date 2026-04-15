@@ -4,7 +4,7 @@ import applicationsService from "../../services/applications.service";
 import { 
   Container, Title, Text, Card, Group, Avatar, 
   Stack, Button, Loader, Center, SimpleGrid, 
-  Badge, Paper, Box
+  Badge, Paper, Box, SegmentedControl, Pagination 
 } from "@mantine/core";
 import { 
   IconArrowLeft, IconExternalLink, IconInbox 
@@ -14,6 +14,9 @@ function JobApplicantsPage() {
   const { jobId } = useParams();
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("ALL");
+  const [activePage, setActivePage] = useState(1);
+  const itemsPerPage = 6;
 
   useEffect(() => {
     applicationsService.getJobApplications(jobId)
@@ -26,6 +29,24 @@ function JobApplicantsPage() {
         setLoading(false);
       });
   }, [jobId]);
+
+  // Lógica de filtrado
+  const filteredApplications = applications.filter((app) => {
+    if (filter === "ALL") return true;
+    return app.status === filter;
+  });
+
+  // Lógica de paginación
+  const totalPages = Math.ceil(filteredApplications.length / itemsPerPage);
+  const currentItems = filteredApplications.slice(
+    (activePage - 1) * itemsPerPage,
+    activePage * itemsPerPage
+  );
+
+  // Resetear página al cambiar el filtro
+  useEffect(() => {
+    setActivePage(1);
+  }, [filter]);
 
   if (loading) return <Center h="80vh"><Loader size="xl" /></Center>;
 
@@ -51,63 +72,103 @@ function JobApplicantsPage() {
           </Box>
           
           <Badge size="xl" variant="outline" radius="sm">
-            {applications.length} {applications.length === 1 ? 'Applicant' : 'Applicants'}
+            {filteredApplications.length} {filteredApplications.length === 1 ? 'Applicant' : 'Applicants'}
           </Badge>
         </Group>
 
-        {applications.length === 0 ? (
+        {/* FILTROS DE ESTADO */}
+        <Paper withBorder p="xs" radius="md">
+          <SegmentedControl
+            fullWidth
+            value={filter}
+            onChange={setFilter}
+            data={[
+              { label: 'All', value: 'ALL' },
+              { label: 'Pending', value: 'PENDING' },
+              { label: 'In Process', value: 'IN PROCESS' },
+              { label: 'Rejected', value: 'REJECTED' },
+              { label: 'Hired', value: 'HIRED' },
+            ]}
+          />
+        </Paper>
+
+        {filteredApplications.length === 0 ? (
           <Paper withBorder p={50} radius="md" ta="center">
             <IconInbox size={50} color="gray" stroke={1.5} />
-            <Title order={3} mt="md">No applicants yet</Title>
-            <Text c="dimmed">This job offer hasn't received any applications so far.</Text>
+            <Title order={3} mt="md">No applicants found</Title>
+            <Text c="dimmed">
+              {filter === "ALL" 
+                ? "This job offer hasn't received any applications so far." 
+                : `There are no applications with status "${filter}"`}
+            </Text>
           </Paper>
         ) : (
-          <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md">
-            {applications.map((app) => (
-              <Card key={app._id} withBorder padding="lg" radius="md" shadow="sm">
-                <Group justify="space-between" mb="md">
-                  <Badge 
-                    color={app.status === "APPROVED" ? "green" : app.status === "REJECTED" ? "red" : "blue"}
-                    variant="light"
-                  >
-                    {app.status}
-                  </Badge>
-                </Group>
-
-                <Stack align="center" gap="xs">
-                  <Avatar 
-                    src={app.applicant?.logo} 
-                    size={80} 
-                    radius={80} 
-                    color="blue"
-                  >
-                    {app.applicant?.firstName?.[0]}
-                  </Avatar>
-                  
-                  <Box ta="center">
-                    <Text fw={700} size="lg">
-                      {app.applicant?.firstName} {app.applicant?.lastName}
-                    </Text>
-                    <Badge variant="outline" color="gray" size="sm">
-                      {app.applicant?.bootcamp}
+          <>
+            <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md">
+              {currentItems.map((app) => (
+                <Card key={app._id} withBorder padding="lg" radius="md" shadow="sm">
+                  <Group justify="space-between" mb="md">
+                    <Badge 
+                      color={
+                        app.status === "HIRED" ? "green" : 
+                        app.status === "REJECTED" ? "red" : 
+                        app.status === "IN PROCESS" ? "orange" : "blue"
+                      }
+                      variant="light"
+                    >
+                      {app.status}
                     </Badge>
-                  </Box>
-                </Stack>
+                  </Group>
 
-                <Button 
-                  component={Link} 
-                  to={`/applications/${app._id}`}
-                  fullWidth 
-                  mt="xl" 
-                  variant="filled"
-                  color="blue"
-                  rightSection={<IconExternalLink size={16} />}
-                >
-                  View Full Application
-                </Button>
-              </Card>
-            ))}
-          </SimpleGrid>
+                  <Stack align="center" gap="xs">
+                    <Avatar 
+                      src={app.applicant?.logo} 
+                      size={80} 
+                      radius={80} 
+                      color="blue"
+                    >
+                      {app.applicant?.firstName?.[0]}
+                    </Avatar>
+                    
+                    <Box ta="center">
+                      <Text fw={700} size="lg">
+                        {app.applicant?.firstName} {app.applicant?.lastName}
+                      </Text>
+                      <Badge variant="outline" color="gray" size="sm">
+                        {app.applicant?.bootcamp}
+                      </Badge>
+                    </Box>
+                  </Stack>
+
+                  <Button 
+                    component={Link} 
+                    to={`/applications/${app._id}`}
+                    fullWidth 
+                    mt="xl" 
+                    variant="light"
+                    rightSection={<IconExternalLink size={16} />}
+                  >
+                    View Full Application
+                  </Button>
+                </Card>
+              ))}
+            </SimpleGrid>
+
+            {/* PAGINACIÓN */}
+            {totalPages > 1 && (
+              <Center mt="xl">
+                <Pagination 
+                  total={totalPages} 
+                  value={activePage} 
+                  onChange={(page) => {
+                    setActivePage(page);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }} 
+                  radius="md"
+                />
+              </Center>
+            )}
+          </>
         )}
       </Stack>
     </Container>
