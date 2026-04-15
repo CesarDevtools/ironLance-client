@@ -5,12 +5,13 @@ import { AuthContext } from "../../context/auth.context";
 import { 
   Container, Title, Text, TextInput, SimpleGrid, Paper, Badge, 
   Group, Stack, Box, Divider, Center, Loader, Button, 
-  ThemeIcon, Avatar, Grid, Progress, Affix, Transition, ActionIcon, rem // Añadidos Affix, Transition, ActionIcon
+  ThemeIcon, Avatar, Grid, Progress, Affix, Transition, ActionIcon, rem,
+  Pagination 
 } from "@mantine/core";
-import { useWindowScroll } from '@mantine/hooks'; // Añadido hook de scroll
+import { useWindowScroll } from '@mantine/hooks'; 
 import { 
   IconSearch, IconCoin, IconMapPin, IconClock, 
-  IconDeviceAnalytics, IconChecklist, IconRocket, IconPlus, IconArrowUp // Añadido IconArrowUp
+  IconDeviceAnalytics, IconChecklist, IconRocket, IconPlus, IconArrowUp 
 } from "@tabler/icons-react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -24,6 +25,8 @@ function JobBoardPage() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [scroll, scrollTo] = useWindowScroll();
+  const [activePage, setActivePage] = useState(1);
+  const jobsPerPage = 5;
 
   // Lista de habilidades populares 
   const popularSkills = ["React", "Python", "Node", "Figma", "Java"];
@@ -32,7 +35,7 @@ function JobBoardPage() {
   const calculateProgress = () => {
     if (!user) return 0;
     let score = 0;
-    const totalFields = user.role === "IRONHACKER" ? 8 : 5; // 
+    const totalFields = user.role === "IRONHACKER" ? 8 : 5; 
     
     if (user.role === "IRONHACKER") {
       if (user.firstName) score++;
@@ -73,6 +76,17 @@ function JobBoardPage() {
       job.title.toLowerCase().includes(searchLower)
     );
   });
+
+  // Lógica para obtener los empleos de la página actual
+  const indexOfLastJob = activePage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+
+  // Resetear a página 1 cuando se busca algo
+  useEffect(() => {
+    setActivePage(1);
+  }, [search]);
 
   const getLevelBadge = (level) => {
     const config = {
@@ -130,8 +144,8 @@ function JobBoardPage() {
           </Stack>
 
           <SimpleGrid cols={1} spacing="lg">
-            {filteredJobs.length > 0 ? (
-              filteredJobs.map((job) => {
+            {currentJobs.length > 0 ? (
+              currentJobs.map((job) => {
                 const levelInfo = getLevelBadge(job.level);
                 return (
                   <Paper key={job._id} withBorder p="xl" radius="md" shadow="sm" style={{
@@ -191,6 +205,22 @@ function JobBoardPage() {
               <Center py="xl"><Text c="dimmed">No jobs found matching those skills.</Text></Center>
             )}
           </SimpleGrid>
+
+          {/* COMPONENTE DE PAGINACIÓN */}
+          {totalPages > 1 && (
+            <Center mt={40}>
+              <Pagination 
+                total={totalPages} 
+                value={activePage} 
+                onChange={(page) => {
+                  setActivePage(page);
+                  scrollTo({ y: 0 }); 
+                }} 
+                radius="md"
+                withEdges
+              />
+            </Center>
+          )}
         </Grid.Col>
 
         {/* COLUMNA DERECHA (25%) - SOLO DESKTOP */}
