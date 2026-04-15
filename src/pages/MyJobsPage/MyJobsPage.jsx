@@ -18,6 +18,7 @@ import {
   Center,
   Loader,
   Box,
+  Pagination, 
 } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import {
@@ -36,6 +37,8 @@ function MyJobsPage() {
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [activePage, setActivePage] = useState(1);
+  const jobsPerPage = 6;
 
   useEffect(() => {
     fetchMyJobs();
@@ -85,6 +88,18 @@ function MyJobsPage() {
   const filteredJobs = jobs.filter((job) =>
     job.title.toLowerCase().includes(search.toLowerCase()),
   );
+
+  // Lógica de paginación
+  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+  const currentJobs = filteredJobs.slice(
+    (activePage - 1) * jobsPerPage,
+    activePage * jobsPerPage
+  );
+
+  // Resetear a página 1 cuando se busca
+  useEffect(() => {
+    setActivePage(1);
+  }, [search]);
 
   if (loading)
     return (
@@ -137,80 +152,98 @@ function MyJobsPage() {
             </Text>
           </Paper>
         ) : (
-          <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
-            {filteredJobs.map((job) => (
-              <Card
-                key={job._id}
-                withBorder
-                padding="lg"
-                radius="md"
-                shadow="sm"
-              >
-                <Group justify="space-between" mb="xs">
-                  <Badge variant="light" color={job.active ? "green" : "red"}>
-                    {job.active ? "Active" : "Closed"}
-                  </Badge>
+          <>
+            <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
+              {currentJobs.map((job) => (
+                <Card
+                  key={job._id}
+                  withBorder
+                  padding="lg"
+                  radius="md"
+                  shadow="sm"
+                >
+                  <Group justify="space-between" mb="xs">
+                    <Badge variant="light" color={job.active ? "green" : "red"}>
+                      {job.active ? "Active" : "Closed"}
+                    </Badge>
 
-                  <Menu shadow="md" width={200} position="bottom-end">
-                    <Menu.Target>
-                      <ActionIcon variant="subtle" color="gray">
-                        <IconDotsVertical size={18} />
-                      </ActionIcon>
-                    </Menu.Target>
-                    <Menu.Dropdown>
-                      <Menu.Label>Actions</Menu.Label>
-                      <Menu.Item
-                        component={Link}
-                        to={`/jobs/edit/${job._id}`}
-                        leftSection={<IconEdit size={14} />}
-                      >
-                        Edit Job
-                      </Menu.Item>
-                      <Menu.Divider />
-                      <Menu.Item
-                        color="red"
-                        leftSection={<IconTrash size={14} />}
-                        onClick={() => openDeleteModal(job._id)} 
-                      >
-                        Delete Job
-                      </Menu.Item>
-                    </Menu.Dropdown>
-                  </Menu>
-                </Group>
+                    <Menu shadow="md" width={200} position="bottom-end">
+                      <Menu.Target>
+                        <ActionIcon variant="subtle" color="gray">
+                          <IconDotsVertical size={18} />
+                        </ActionIcon>
+                      </Menu.Target>
+                      <Menu.Dropdown>
+                        <Menu.Label>Actions</Menu.Label>
+                        <Menu.Item
+                          component={Link}
+                          to={`/jobs/edit/${job._id}`}
+                          leftSection={<IconEdit size={14} />}
+                        >
+                          Edit Job
+                        </Menu.Item>
+                        <Menu.Divider />
+                        <Menu.Item
+                          color="red"
+                          leftSection={<IconTrash size={14} />}
+                          onClick={() => openDeleteModal(job._id)} 
+                        >
+                          Delete Job
+                        </Menu.Item>
+                      </Menu.Dropdown>
+                    </Menu>
+                  </Group>
 
-                <Stack gap={4} mb="xl">
-                  <Title order={4} lineClamp={1}>
-                    {job.title}
-                  </Title>
-                  <Text size="sm" c="dimmed">
-                    {job.location} • {job.jobType}
-                  </Text>
-                </Stack>
+                  <Stack gap={4} mb="xl">
+                    <Title order={4} lineClamp={1}>
+                      {job.title}
+                    </Title>
+                    <Text size="sm" c="dimmed">
+                      {job.location} • {job.jobType}
+                    </Text>
+                  </Stack>
 
-                <Stack gap="xs">
-                  <Button
-                    component={Link}
-                    to={`/jobs/${job._id}/applicants`}
-                    variant="light"
-                    fullWidth
-                    leftSection={<IconUsers size={18} />}
-                  >
-                    View Applicants
-                  </Button>
-                  <Button
-                    component={Link}
-                    to={`/jobs/${job._id}`}
-                    variant="subtle"
-                    fullWidth
-                    color="gray"
-                    leftSection={<IconInfoCircle size={18} />}
-                  >
-                    Public View
-                  </Button>
-                </Stack>
-              </Card>
-            ))}
-          </SimpleGrid>
+                  <Stack gap="xs">
+                    <Button
+                      component={Link}
+                      to={`/jobs/${job._id}/applicants`}
+                      variant="light"
+                      fullWidth
+                      leftSection={<IconUsers size={18} />}
+                    >
+                      View Applicants
+                    </Button>
+                    <Button
+                      component={Link}
+                      to={`/jobs/${job._id}`}
+                      variant="subtle"
+                      fullWidth
+                      color="gray"
+                      leftSection={<IconInfoCircle size={18} />}
+                    >
+                      Public View
+                    </Button>
+                  </Stack>
+                </Card>
+              ))}
+            </SimpleGrid>
+
+            {/* COMPONENTE DE PAGINACIÓN */}
+            {totalPages > 1 && (
+              <Center mt="xl">
+                <Pagination
+                  total={totalPages}
+                  value={activePage}
+                  onChange={(page) => {
+                    setActivePage(page);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  radius="md"
+                  withEdges
+                />
+              </Center>
+            )}
+          </>
         )}
       </Stack>
     </Container>
