@@ -18,7 +18,7 @@ import {
   Center,
   Loader,
   Box, 
-  Switch, // Añadido Switch
+  Switch,
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import {
@@ -29,7 +29,9 @@ import {
   IconCheck,
   IconX,
   IconEye,
+  IconExternalLink,
 } from "@tabler/icons-react";
+import { Link } from "react-router-dom"; 
 
 function ProfilePage() {
   const { user, authenticateUser } = useContext(AuthContext);
@@ -150,13 +152,28 @@ function ProfilePage() {
         <form onSubmit={handleSubmit}>
           <Stack gap="lg">
             {/* --- SECCIÓN: INFORMACIÓN BÁSICA --- */}
-            <Title order={4} mb={-10}>
-              <IconUser
-                size={18}
-                style={{ marginBottom: -3, marginRight: 8 }}
-              />{" "}
-              Basic Info
-            </Title>
+            <Group justify="space-between" align="center" mb={-10}>
+              <Title order={4}>
+                <IconUser
+                  size={18}
+                  style={{ marginBottom: -3, marginRight: 8 }}
+                />{" "}
+                Basic Info
+              </Title>
+              
+              {/* Botón de Check Public View (Solo para Ironhackers) */}
+              {user?.role === "IRONHACKER" && (
+                <Button 
+                  component={Link} 
+                  to={`/ironhackers/${user._id}`} 
+                  variant="subtle" 
+                  size="xs" 
+                  leftSection={<IconExternalLink size={14} />}
+                >
+                  Check public view
+                </Button>
+              )}
+            </Group>
 
             {user?.role === "IRONHACKER" ? (
               <SimpleGrid cols={{ base: 1, sm: 2 }}>
@@ -211,7 +228,9 @@ function ProfilePage() {
               }
               value={formData.about}
               onChange={handleChange}
+              autosize 
               minRows={4}
+              maxRows={15} 
               maxLength={3000}
               description={`${formData.about.length} / 3000 characters`}
             />

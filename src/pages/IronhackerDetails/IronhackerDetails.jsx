@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react"; 
 import { useParams, Link } from "react-router-dom";
+import { AuthContext } from "../../context/auth.context"; 
 import usersService from "../../services/users.service";
 import {
   Container,
@@ -47,6 +48,7 @@ import {
 function IronhackerDetailsPage() {
   const { userId } = useParams();
   const theme = useMantineTheme();
+  const { user } = useContext(AuthContext); 
   const [hacker, setHacker] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -86,11 +88,11 @@ function IronhackerDetailsPage() {
         <Center mt="xl">
           <Button
             component={Link}
-            to="/ironhackers"
+            to={user?.role === "IRONHACKER" ? "/profile" : "/ironhackers"}
             variant="subtle"
             leftSection={<IconArrowLeft size={16} />}
           >
-            Back to Ironhackers Board
+            {user?.role === "IRONHACKER" ? "Back to Profile" : "Back to Ironhackers Board"}
           </Button>
         </Center>
       </Container>
@@ -178,7 +180,7 @@ function IronhackerDetailsPage() {
         <Container size="lg">
           <Button
             component={Link}
-            to="/ironhackers"
+            to={user?.role === "IRONHACKER" ? "/profile" : "/ironhackers"}
             variant="transparent"
             mb="xl"
             leftSection={<IconArrowLeft size={16} />}
@@ -186,7 +188,7 @@ function IronhackerDetailsPage() {
             opacity={0.8}
             style={{ "&:hover": { opacity: 1 } }}
           >
-            Back to Talent Board
+            {user?.role === "IRONHACKER" ? "Back to Profile" : "Back to Talent Board"}
           </Button>
 
           <Grid align="center" gutter="xl">

@@ -55,7 +55,7 @@ function App() {
         />
         <Route 
           path="/ironhackers/:userId" 
-          element={<IsPrivate allowedRoles={["COMPANY"]}><IronhackerDetailsPage /></IsPrivate>} 
+          element={<IsPrivate ><IronhackerDetailsPage /></IsPrivate>} 
         />
         <Route 
           path="/my-jobs" 
