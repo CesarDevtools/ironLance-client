@@ -89,6 +89,9 @@ function CreateJobPage() {
             <Textarea
               label="Description"
               placeholder="Tell us about the role and the project..."
+              autosize 
+              minRows={4}
+              maxRows={15} 
               required
               minRows={4}
               value={formData.description}

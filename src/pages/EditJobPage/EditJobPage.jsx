@@ -4,10 +4,17 @@ import jobsService from "../../services/jobs.service";
 import { 
   Container, Paper, Title, TextInput, Textarea, 
   Button, Group, Stack, Select, TagsInput, 
-  Divider, Text, Loader, Center, Box, Switch
+  Divider, Text, Loader, Center, Box, Switch, MultiSelect
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { IconDeviceFloppy, IconArrowLeft, IconEdit } from "@tabler/icons-react";
+
+// Listado cerrado de opciones
+const SKILLS_OPTIONS = [
+  "React", "JavaScript", "Node.js", "Express", "MongoDB", "Python", "Data Analysis", 
+  "SQL", "UX Design", "UI Design", "Figma", "TypeScript", "HTML", "CSS", "AWS", 
+  "Docker", "Cybersecurity", "Machine Learning", "Tableau", "Power BI", "Git"
+];
 
 function EditJobPage() {
   const { id } = useParams();
@@ -118,17 +125,26 @@ function EditJobPage() {
 
             <Textarea
               label="Description"
+              autosize 
+              minRows={4}
+              maxRows={15} 
               required
               minRows={4}
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             />
 
-            <TagsInput
+             {/* MultiSelect  */}
+            <MultiSelect
               label="Requirements"
-              description="Press Enter to add new skills"
+              placeholder="Pick skills from the list"
+              data={SKILLS_OPTIONS}
+              searchable 
+              nothingFoundMessage="Skill not found..."
               value={formData.requirements}
               onChange={(val) => setFormData({ ...formData, requirements: val })}
+              hidePickedOptions 
+              clearable
             />
 
             <Divider my="sm" label="Conditions" labelPosition="center" />
