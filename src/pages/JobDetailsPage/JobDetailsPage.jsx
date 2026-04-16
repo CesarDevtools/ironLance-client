@@ -99,9 +99,10 @@ function JobDetailsPage() {
         title="Apply for this position" 
         centered
         radius="md"
+        size="xl"
       >
         <Stack>
-          <Text size="sm">
+          <Text size="md">
             Introduce yourself to <strong>{job.owner?.companyName}</strong>. 
             Explain why you are a great fit for the <strong>{job.title}</strong> role.
           </Text>
@@ -109,6 +110,8 @@ function JobDetailsPage() {
             placeholder="Write your cover letter here..."
             label="Message"
             minRows={5}
+            maxRows={15}
+            autosize
             maxLength={3000}
             value={message}
             onChange={(e) => setMessage(e.currentTarget.value)}
