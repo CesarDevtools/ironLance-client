@@ -3,11 +3,18 @@ import { useNavigate } from "react-router-dom";
 import jobsService from "../../services/jobs.service";
 import { 
   Container, Paper, Title, TextInput, Textarea, 
-  Button, Group, Stack, Select, TagsInput, 
+  Button, Group, Stack, Select, MultiSelect, 
   NumberInput, Box, Divider, Text, Center
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { IconBriefcase, IconArrowLeft, IconCheck } from "@tabler/icons-react";
+
+// Listado cerrado de opciones
+const SKILLS_OPTIONS = [
+  "React", "JavaScript", "Node.js", "Express", "MongoDB", "Python", "Data Analysis", 
+  "SQL", "UX Design", "UI Design", "Figma", "TypeScript", "HTML", "CSS", "AWS", 
+  "Docker", "Cybersecurity", "Machine Learning", "Tableau", "Power BI", "Git"
+];
 
 function CreateJobPage() {
   const navigate = useNavigate();
@@ -88,12 +95,16 @@ function CreateJobPage() {
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             />
 
-            <TagsInput
+            {/* MultiSelect  */}
+            <MultiSelect
               label="Requirements"
-              placeholder="Type a skill and press Enter"
-              description="Add the main technologies or skills required"
+              placeholder="Pick skills from the list"
+              data={SKILLS_OPTIONS}
+              searchable 
+              nothingFoundMessage="Skill not found..."
               value={formData.requirements}
               onChange={(val) => setFormData({ ...formData, requirements: val })}
+              hidePickedOptions 
               clearable
             />
 
