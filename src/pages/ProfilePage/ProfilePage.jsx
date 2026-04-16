@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
-import authService from "../../services/auth.service"; // Ajusta la ruta según tu proyecto
+import authService from "../../services/auth.service"; 
 import {
   Container,
   Paper,
@@ -18,6 +18,7 @@ import {
   Center,
   Loader,
   Box, 
+  Switch, // Añadido Switch
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import {
@@ -27,6 +28,7 @@ import {
   IconBriefcase,
   IconCheck,
   IconX,
+  IconEye,
 } from "@tabler/icons-react";
 
 function ProfilePage() {
@@ -46,6 +48,7 @@ function ProfilePage() {
     companyName: "",
     website: "",
     logo: "",
+    isPublic: false, 
   });
 
   // 1. Cargar datos actuales del usuario al montar
@@ -65,6 +68,7 @@ function ProfilePage() {
           companyName: userData.companyName || "",
           website: userData.website || "",
           logo: userData.logo || "",
+          isPublic: userData.isPublic || false, 
         });
         setFetching(false);
       })
@@ -271,6 +275,27 @@ function ProfilePage() {
                     onChange={handleChange}
                   />
                 </SimpleGrid>
+
+                {/* --- SECCIÓN: PRIVACIDAD (SOLO IRONHACKER) --- */}
+                <Divider variant="dashed" />
+                <Paper withBorder p="md" radius="md">
+                  <Group justify="space-between" wrap="nowrap">
+                    <Box>
+                      <Group gap="xs" mb={4}>
+                        <IconEye size={18} color="cyan" />
+                        <Text fw={600} size="sm">Public Visibility</Text>
+                      </Group>
+                      <Text size="xs" c="dimmed">
+                        When enabled, your profile will be visible for companies.
+                      </Text>
+                    </Box>
+                    <Switch
+                      checked={formData.isPublic}
+                      onChange={(event) => setFormData({ ...formData, isPublic: event.currentTarget.checked })}
+                      size="lg"
+                    />
+                  </Group>
+                </Paper>
               </>
             ) : (
               <>
