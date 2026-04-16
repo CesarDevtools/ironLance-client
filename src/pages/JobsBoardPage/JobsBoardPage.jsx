@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useContext } from "react"; 
+import { Link, useNavigate } from "react-router-dom"; 
 import jobsService from "../../services/jobs.service";
+import { AuthContext } from "../../context/auth.context"; 
 import { 
   Container, Title, Text, TextInput, SimpleGrid, Paper, Badge, 
   Group, Stack, Box, Divider, Center, Loader, Button, 
@@ -19,6 +20,8 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 dayjs.extend(relativeTime);
 
 function JobBoardPage() {
+  const { user, isLoggedIn } = useContext(AuthContext); 
+  const navigate = useNavigate(); 
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -27,6 +30,13 @@ function JobBoardPage() {
   const jobsPerPage = 5;
 
   const popularSkills = ["React", "Python", "Node", "Figma", "Java"];
+
+  // Lógica de redirección para COMPANY
+  useEffect(() => {
+    if (isLoggedIn && user?.role === "COMPANY") {
+      navigate("/my-jobs");
+    }
+  }, [isLoggedIn, user, navigate]);
 
   useEffect(() => {
     jobsService.getAllJobs()

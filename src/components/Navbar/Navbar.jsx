@@ -22,7 +22,8 @@ import {
   IconMoon, 
   IconUser, 
   IconLogout, 
-  IconPlus
+  IconPlus,
+  IconUserSearch 
 } from "@tabler/icons-react";
 import classes from "./Navbar.module.css";
 
@@ -50,12 +51,15 @@ function Navbar() {
 
   const NavContent = ({ isMobile = false }) => (
     <>
-      <Button 
-        component={Link} to="/jobs" variant="subtle" 
-        onClick={close} fullWidth={isMobile} justify={isMobile ? "flex-start" : "center"}
-      >
-        Find Jobs
-      </Button>
+      {/* Solo visible para anónimos o Ironhackers */}
+      {(!isLoggedIn || user?.role === "IRONHACKER") && (
+        <Button 
+          component={Link} to="/jobs" variant="subtle" 
+          onClick={close} fullWidth={isMobile} justify={isMobile ? "flex-start" : "center"}
+        >
+          Find Jobs
+        </Button>
+      )}
 
       {isLoggedIn && user?.role === "IRONHACKER" && (
         <Button 
@@ -68,6 +72,14 @@ function Navbar() {
 
       {isLoggedIn && user?.role === "COMPANY" && (
         <>
+          {/* Botón específico para empresas para buscar talento */}
+          <Button 
+            component={Link} to="/ironhackers" variant="subtle" 
+            leftSection={<IconUserSearch size={18} />}
+            onClick={close} fullWidth={isMobile} justify={isMobile ? "flex-start" : "center"}
+          >
+            Find Talent
+          </Button>
           <Button 
             component={Link} to="/my-jobs" variant="subtle" 
             onClick={close} fullWidth={isMobile} justify={isMobile ? "flex-start" : "center"}

@@ -21,6 +21,7 @@ import ApplicationDetailsPage from "./pages/ApplicationDetails/ApplicationDetail
 import MyJobsPage from "./pages/MyJobsPage/MyJobsPage";
 import CreateJobPage from "./pages/CreateJobPage/CreateJobPage";
 import EditJobPage from "./pages/EditJobPage/EditJobPage";
+import IronhackersBoardPage from "./pages/IronhackersBoardPage/IronhackersBoardPage";
 
 
 function App() {
@@ -48,6 +49,10 @@ function App() {
         />
 
         {/* Específicas: COMPANY */}
+         <Route 
+          path="/ironhackers" 
+          element={<IsPrivate allowedRoles={["COMPANY"]}><IronhackersBoardPage /></IsPrivate>} 
+        />
         <Route 
           path="/my-jobs" 
           element={<IsPrivate allowedRoles={["COMPANY"]}><MyJobsPage /></IsPrivate>} 
