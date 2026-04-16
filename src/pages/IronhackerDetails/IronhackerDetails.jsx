@@ -35,6 +35,13 @@ import {
   IconBriefcase,
   IconConfetti,
   IconPalette,
+  IconCode,
+  IconChartBar,
+  IconShieldLock,
+  IconDatabase,
+  IconCloud,
+  IconBrain,
+  IconSparkles
 } from "@tabler/icons-react";
 
 function IronhackerDetailsPage() {
@@ -105,17 +112,56 @@ function IronhackerDetailsPage() {
     );
   }
 
-  // Configuración de colores/iconos según el bootcamp (para dar personalidad)
-  const getBootcampConfig = (bootcamp) => {
-    const default_config = { color: "blue", icon: IconBriefcase };
-    if (!bootcamp) return default_config;
-    if (bootcamp.includes("Web"))
-      return { color: "orange", icon: IconBriefcase };
-    if (bootcamp.includes("UX")) return { color: "grape", icon: IconPalette };
-    if (bootcamp.includes("Data")) return { color: "teal", icon: IconSchool };
-
-    return default_config;
+ const getBootcampConfig = (bootcamp) => {
+  // 1. Diccionario de configuración para todos los roles
+  const configs = {
+    "Web Development": { 
+      color: "blue", 
+      icon: IconCode,  
+    },
+    "Data Analytics": { 
+      color: "cyan", 
+      icon: IconChartBar,  
+    },
+    "UX/UI Design": { 
+      color: "pink", 
+      icon: IconPalette, 
+    },
+    "Cybersecurity": { 
+      color: "red", 
+      icon: IconShieldLock, 
+    },
+    "Data Engineering": { 
+      color: "orange", 
+      icon: IconDatabase, 
+    },
+    "Machine Learning": { 
+      color: "grape", 
+      icon: IconBrain, 
+    },
+    "Cloud Engineering": { 
+      color: "indigo", 
+      icon: IconCloud, 
+    },
+    "AI Consultant": { 
+      color: "teal", 
+      icon: IconSparkles, 
+    }
   };
+
+  // 2. Configuración por defecto si no hay match
+  const default_config = { 
+    color: "blue", 
+    icon: IconBriefcase, 
+  };
+
+  if (!bootcamp) return default_config;
+
+  // 3. Buscamos la clave que esté incluida en el string del bootcamp
+  const foundKey = Object.keys(configs).find((key) => bootcamp.includes(key));
+
+  return configs[foundKey] || default_config;
+};
 
   const bootcampConfig = getBootcampConfig(hacker.bootcamp);
 
