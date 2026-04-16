@@ -109,10 +109,10 @@ function ProfilePage() {
           icon: <IconCheck size={18} />,
         });
       })
-      .catch((err) => {
+      .catch(() => {
         notifications.show({
           title: "Update failed",
-          message: err.response?.data?.message || "Error updating profile",
+          message: `Internal server error - Make sure to fill all mandatory inputs`,
           color: "red",
           icon: <IconX size={18} />,
         });
@@ -249,6 +249,7 @@ function ProfilePage() {
                 </Title>
                 <SimpleGrid cols={{ base: 1, sm: 2 }}>
                   <Select
+                    required
                     label="Bootcamp"
                     data={[
                       "Web Development",
@@ -264,6 +265,7 @@ function ProfilePage() {
                     onChange={(val) => handleSelectChange("bootcamp", val)}
                   />
                   <Select
+                    required
                     label="Campus"
                     data={["Madrid", "Barcelona", "Remote"]}
                     value={formData.campus}
