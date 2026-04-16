@@ -5,42 +5,27 @@ class ApplicationsService {
     this.api = apiService;
   }
 
-  /**
-   * 1. Aplicar a una oferta (Sólo Ironhackers)
-   * @param {Object} appData - { job: "ID_DEL_PUESTO", message: "Hola, me interesa..." }
-   */
+  // POST /api/applications - Crear una aplicación
   createApplication(appData) {
     return this.api.post("/applications", appData);
   }
 
-  /*
-   * 2. Ver mis aplicaciones enviadas (Sólo Ironhackers)
-   */
+  // GET /api/my-applications - Mis aplicaciones enviadas
   getMyApplications() {
     return this.api.get("/my-applications");
   }
 
-  /**
-   * 3. Ver detalle de una aplicación específica (Empresa)
-   * @param {String} appId - ID de la aplicación
-   */
+  // GET /api/applications/:appId - Detalle de una aplicación
   getApplicationDetails(appId) {
     return this.api.get(`/applications/${appId}`);
   }
 
-  /**
-   * 4. Ver aplicantes de un Job específico (Sólo Empresas)
-   * @param {String} jobId - ID del puesto de trabajo
-   */
+  // GET /api/jobs/:jobId/applications - Aplicantes de un puesto
   getJobApplications(jobId) {
     return this.api.get(`/jobs/${jobId}/applications`);
   }
 
-  /**
-   * 5. Cambiar el estado de una aplicación (Sólo Empresas)
-   * @param {String} appId - ID de la aplicación
-   * @param {String} status - " "PENDING", "IN PROCESS", "REJECTED", "HIRED" "
-   */
+  // PUT /api/applications/:appId - Cambiar estado de una aplicación
   updateApplicationStatus(appId, status) {
     return this.api.put(`/applications/${appId}`, { status });
   }

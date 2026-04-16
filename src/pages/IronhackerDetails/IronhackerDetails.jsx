@@ -236,7 +236,7 @@ function IronhackerDetailsPage() {
               </Group>
             </Grid.Col>
 
-            {/* BOTONES DE ACCIÓN MANTENIDOS */}
+            {/* BOTONES DE ACCIÓN  */}
             <Grid.Col
               span={{ base: 12, md: "content" }}
               ta={{ base: "center", md: "right" }}

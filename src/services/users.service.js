@@ -1,12 +1,12 @@
 import apiService from "./api.service"; 
 
 const usersService = {
-  // Obtiene los perfiles de Ironhackers públicos (solo para empresas)
+  // GET /api/users/ironhackers - Lista de alumnos públicos
   getIronhackers: () => {
     return apiService.get("/ironhackers");
   },
 
-  // Obtiene los detalles de un Ironhacker específico por ID
+  // GET /api/users/:userId - Detalles de un alumno
   getIronhackerDetails: (userId) => {
     return apiService.get(`/${userId}`);
   }

@@ -29,6 +29,7 @@ function AuthProviderWrapper(props) {
         })
         .catch((error) => {
           // Si el token es falso, expiró o hubo error: reseteamos todo
+          console.error("Auth verification failed:", error);
           removeToken();
           setIsLoggedIn(false);
           setIsLoading(false);
@@ -48,10 +49,10 @@ function AuthProviderWrapper(props) {
 
   const logOutUser = () => {
     removeToken();
-    authenticateUser(); // Esto actualizará los estados a false/null
+    authenticateUser(); 
   };
 
-  // 3. Efecto de carga inicial: se ejecuta una sola vez cuando se abre la app
+  // 3. Efecto de carga inicial
   useEffect(() => {
     authenticateUser();
   }, []);
