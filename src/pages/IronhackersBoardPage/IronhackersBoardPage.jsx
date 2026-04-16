@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import usersService from "../../services/users.service";
+import { Link } from "react-router-dom";
 import { 
   Container, Title, Text, TextInput, SimpleGrid, Paper, Badge, 
   Group, Stack, Box, Divider, Center, Loader, Button, 
@@ -19,7 +20,7 @@ function IronhackersBoardPage() {
   const [loading, setLoading] = useState(true);
   const [scroll, scrollTo] = useWindowScroll();
   const [activePage, setActivePage] = useState(1);
-  const itemsPerPage = 6; // Un número par suele quedar mejor en rejilla
+  const itemsPerPage = 6; 
 
   useEffect(() => {
     usersService.getIronhackers()
@@ -152,18 +153,17 @@ function IronhackersBoardPage() {
                             variant="outline" 
                             size="xs" 
                             radius="xl"
-                            onClick={() => window.location.href = `mailto:${hacker.email || ''}`}
+                            component={Link} 
+                            to={`/ironhacker/${hacker._id}`}
                         >
-                            Contact
+                            Details
                         </Button>
                     </Group>
                   </Stack>
                 </Paper>
               ))
             ) : (
-              <Grid.Col span={2}>
-                <Center py="xl"><Text c="dimmed">No Ironhackers found matching your search.</Text></Center>
-              </Grid.Col>
+              <Center py="xl"><Text c="dimmed">No ironhackers found matching your search.</Text></Center>
             )}
           </SimpleGrid>
 
