@@ -90,7 +90,7 @@ function IronhackerDetailsPage() {
     );
   }
 
-  // Doble check de seguridad 
+  // Doble check de seguridad
   if (!hacker.isPublic) {
     return (
       <Container size="sm" py="xl">
@@ -109,7 +109,8 @@ function IronhackerDetailsPage() {
   const getBootcampConfig = (bootcamp) => {
     const default_config = { color: "blue", icon: IconBriefcase };
     if (!bootcamp) return default_config;
-    if (bootcamp.includes("Web")) return { color: "orange", icon: IconBriefcase };
+    if (bootcamp.includes("Web"))
+      return { color: "orange", icon: IconBriefcase };
     if (bootcamp.includes("UX")) return { color: "grape", icon: IconPalette };
     if (bootcamp.includes("Data")) return { color: "teal", icon: IconSchool };
 
@@ -123,12 +124,9 @@ function IronhackerDetailsPage() {
       {/* SECCIÓN 1: HERO / BANNER SUPERIOR */}
       <Box
         style={{
-          background:
-            "linear-gradient(135deg, var(--mantine-color-blue-filled) 0%, var(--mantine-color-cyan-filled) 100%)",
-          color: "white",
           paddingTop: rem(40),
-          paddingBottom: rem(80), 
-          borderBottom: "1px solid rgba(255,255,255,0.1)",
+          paddingBottom: rem(80),
+          borderBottom: "1px solid rgba(182, 192, 192, 0.18)",
         }}
       >
         <Container size="lg">
@@ -138,7 +136,6 @@ function IronhackerDetailsPage() {
             variant="transparent"
             mb="xl"
             leftSection={<IconArrowLeft size={16} />}
-            c="white"
             p={0}
             opacity={0.8}
             style={{ "&:hover": { opacity: 1 } }}
@@ -150,14 +147,13 @@ function IronhackerDetailsPage() {
             <Grid.Col span={{ base: 12, md: "content" }}>
               <Avatar
                 src={hacker.logo}
-                size={150} // Más grande aún
+                size={150}
                 radius={150}
                 style={{
-                  border: "6px solid rgba(255,255,255,0.2)",
                   boxShadow: theme.shadows.xl,
                 }}
                 color="blue"
-                mx={{ base: "auto", md: 0 }} // Centrado en móvil
+                mx={{ base: "auto", md: 0 }} 
               >
                 {hacker.firstName?.[0]}
               </Avatar>
@@ -168,16 +164,11 @@ function IronhackerDetailsPage() {
               ta={{ base: "center", md: "left" }}
             >
               <Group gap="xs" justify={{ base: "center", md: "flex-start" }}>
-                <Title
-                  order={1}
-                  fw={900}
-                  size={rem(42)}
-                  style={{ color: "white" }}
-                >
+                <Title order={1} fw={900} size={rem(42)}>
                   {hacker.firstName} {hacker.lastName}
                 </Title>
                 <Tooltip label="Verified Ironhacker">
-                  <IconShieldCheck size={32} color="rgba(255,255,255,0.7)" />
+                  <IconShieldCheck size={32} color="cyan" />
                 </Tooltip>
               </Group>
 
@@ -187,16 +178,14 @@ function IronhackerDetailsPage() {
                 justify={{ base: "center", md: "flex-start" }}
               >
                 <Group gap={5}>
-                  <IconSchool size={20} color="rgba(255,255,255,0.7)" />
-                  <Text fw={700} size="lg" style={{ color: "white" }}>
+                  <IconSchool size={20} />
+                  <Text fw={700} size="lg">
                     {hacker.bootcamp}
                   </Text>
                 </Group>
                 <Group gap={5}>
-                  <IconMapPin size={20} color="rgba(255,255,255,0.7)" />
-                  <Text size="lg" style={{ color: "rgba(255,255,255,0.8)" }}>
-                    {hacker.campus} Campus
-                  </Text>
+                  <IconMapPin size={20} />
+                  <Text size="lg">{hacker.campus} Campus</Text>
                 </Group>
               </Group>
             </Grid.Col>
