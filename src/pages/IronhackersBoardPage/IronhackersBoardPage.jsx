@@ -154,7 +154,7 @@ function IronhackersBoardPage() {
                             size="xs" 
                             radius="xl"
                             component={Link} 
-                            to={`/ironhacker/${hacker._id}`}
+                            to={`/ironhackers/${hacker._id}`}
                         >
                             Details
                         </Button>
