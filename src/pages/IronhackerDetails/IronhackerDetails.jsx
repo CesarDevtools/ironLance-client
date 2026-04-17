@@ -99,8 +99,8 @@ function IronhackerDetailsPage() {
     );
   }
 
-  // Doble check de seguridad
-  if (!hacker.isPublic) {
+  const isOwner = user && user._id === hacker._id;
+  if (!hacker.isPublic && !isOwner) {
     return (
       <Container size="sm" py="xl">
         <Alert
