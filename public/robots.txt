@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /profile
+Disallow: /my-jobs
+Disallow: /my-applications
+Disallow: /jobs/create
+Disallow: /jobs/edit
+Disallow: /ironhackers
+Disallow: /applications
+
+Sitemap: https://ironlance.vercel.app/sitemap.xml
