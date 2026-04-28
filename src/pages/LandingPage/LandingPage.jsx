@@ -49,35 +49,35 @@ function LandingPage() {
   const steps = {
     IRONHACKER: [
       {
-        title: "Find clients and remote jobs",
-        text: "Create your profile to highlight your best work and attract top clients.",
+        title: "Build Your Professional Portfolio",
+        text: "Create a detailed Ironhacker profile showcasing your bootcamp projects, certifications, and technical skills to attract top clients and companies.",
         icon: IconSearch,
       },
       {
-        title: "Submit proposals for work",
-        text: "Negotiate rates for the projects you want or reply to invites from clients.",
+        title: "Bid on Remote Jobs & Contracts",
+        text: "Respond to job postings from verified companies seeking Ironhack graduates. Negotiate rates, project scope, and timelines directly with clients.",
         icon: IconSend,
       },
       {
-        title: "Get paid as you deliver work",
-        text: "Land a contract, do the work you love, and get paid on time.",
+        title: "Get Paid Securely",
+        text: "Receive payments after delivering milestones. Build your freelance career and earn competitive rates for your Ironhack-certified expertise.",
         icon: IconCreditCard,
       },
     ],
     COMPANY: [
       {
-        title: "Posting jobs is always free",
-        text: "Create your own and filter talent matches instantly.",
+        title: "Post Remote Tech Jobs Free",
+        text: "Create detailed job postings targeting Ironhack graduates. Access a pre-screened talent pool of junior and senior developers ready to work.",
         icon: IconPencilPlus,
       },
       {
-        title: "Get proposals and hire",
-        text: "Manage the state of your applicants and contact them directly.",
+        title: "Review & Hire Top Talent",
+        text: "Browse qualified Ironhacker profiles, compare proposals, and communicate directly with candidates. Make data-driven hiring decisions.",
         icon: IconUsers,
       },
       {
-        title: "Pay when work is done",
-        text: "Release payments after approving work, by milestone or upon project completion.",
+        title: "Manage & Pay Your Team",
+        text: "Track project progress through our platform. Release secure payments by milestone or upon project completion. Scale your team globally.",
         icon: IconChecks,
       },
     ],
@@ -89,16 +89,16 @@ function LandingPage() {
       <section className={classes.hero}>
         <Container size="md" py={100}>
           <Title className={classes.heroTitle} ta="center">
-            The bridge between{" "}
+            The Exclusive Marketplace for{" "}
             <Text
               span
               variant="gradient"
               gradient={{ from: "blue", to: "cyan" }}
               inherit
             >
-              Ironhack Talent
+              Ironhack Graduates
             </Text>{" "}
-            and the World
+            & Global Tech Companies
           </Title>
           <Text
             className={classes.heroDescription}
@@ -107,15 +107,12 @@ function LandingPage() {
             size="xl"
             c="dimmed"
           >
-            Stop searching and start hiring graduates from one of the most
-            recognized tech schools worldwide. For our fellow Ironhackers,
-            IronLance offers the best opportunities to prove what we achieve at
-            Ironhack—whether you are a fresh junior or a seasoned senior.
+            Connect directly with vetted Ironhack alumni for remote tech jobs, freelance projects, and contract work. For Ironhackers: showcase your bootcamp expertise to leading companies worldwide. For companies: hire pre-screened tech talent with proven coding skills from the world's fastest-growing tech bootcamp.
           </Text>
           <Center mt={40}>
             <Group justify="center">
               <Button size="lg" radius="md" component={Link} to="/jobs">
-                Explore Opportunities
+                Browse Remote Tech Jobs
               </Button>
               <Button
                 size="lg"
@@ -124,7 +121,7 @@ function LandingPage() {
                 component={Link}
                 to="/signup"
               >
-                Join the Community
+                Join as Ironhacker
               </Button>
             </Group>
           </Center>
@@ -135,8 +132,11 @@ function LandingPage() {
       <section className={classes.sectionGrey}>
         <Container size="lg" py={80}>
           <Title ta="center" mb={50} fw={900}>
-            Find freelancers for every type of work
+            Specialized Ironhack Expertise Across All Tech Disciplines
           </Title>
+          <Text ta="center" size="md" c="dimmed" mb={50}>
+            Browse Ironhack graduates by their bootcamp specialization. Each freelancer has completed an intensive, industry-standard training program.
+          </Text>
           <SimpleGrid cols={{ base: 2, sm: 2, md: 4 }} spacing="lg">
             {CATEGORIES.map((cat) => (
               <Paper
@@ -158,7 +158,7 @@ function LandingPage() {
                   {cat.title}
                 </Text>
                 <Text size="sm" c="dimmed" mt={5}>
-                  Specialized Ironhackers ready to deliver.
+                  Ironhack-certified professionals with production-ready skills.
                 </Text>
               </Paper>
             ))}
@@ -171,7 +171,7 @@ function LandingPage() {
         <Container size="lg" py={80}>
           <Stack align="center" mb={50}>
             <Title order={2} size="h1">
-              How it works?
+              How IronLance Works: Your Path to Success
             </Title>
             <SegmentedControl
               size="md"
