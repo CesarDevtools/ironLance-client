@@ -30,7 +30,7 @@
 	"rewrites": [
 		{
 			"source": "/sitemap.xml",
-			"destination": "https://ironlance-server.vercel.app/sitemap.xml"
+			"destination": "https://ironlance-server.vercel.app/api/sitemap.xml"
 		},
 		{
 			"source": "/(.*)",
