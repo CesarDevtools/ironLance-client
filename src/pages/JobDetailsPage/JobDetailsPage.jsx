@@ -13,7 +13,7 @@ import { notifications } from '@mantine/notifications';
 import { 
   IconMapPin, IconCoin, IconWorld, 
   IconArrowLeft, IconBriefcase, IconCalendar, IconSend,
-  IconCheck, IconX  
+  IconCheck, IconX, IconSparkles
 } from "@tabler/icons-react";
 import dayjs from "dayjs";
 
@@ -28,6 +28,7 @@ function JobDetailsPage() {
   const [opened, { open, close }] = useDisclosure(false);
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
+  const [generating, setGenerating] = useState(false);
 
   useEffect(() => {
     jobsService.getJobDetails(id) 
@@ -47,6 +48,27 @@ function JobDetailsPage() {
       return;
     }
     open();
+  };
+
+  const handleGenerateCoverLetter = () => {
+    setGenerating(true);
+
+    applicationsService.generateCoverLetter(id)
+      .then((res) => {
+        setMessage(res.data.coverLetter);
+        setGenerating(false);
+      })
+      .catch((err) => {
+        setGenerating(false);
+        console.error(err);
+
+        notifications.show({
+          title: 'Could not generate the letter',
+          message: err.response?.data?.message || "Something went wrong. Please try again.",
+          color: 'red',
+          icon: <IconX size={18} />,
+        });
+      });
   };
 
   const submitApplication = () => {
@@ -106,20 +128,36 @@ function JobDetailsPage() {
             Introduce yourself to <strong>{job.owner?.companyName}</strong>. 
             Explain why you are a great fit for the <strong>{job.title}</strong> role.
           </Text>
-          <Textarea
-            placeholder="Write your cover letter here..."
-            label="Message"
-            minRows={5}
-            maxRows={15}
-            autosize
-            maxLength={3000}
-            value={message}
-            onChange={(e) => setMessage(e.currentTarget.value)}
-          />
+          <Stack gap="xs">
+            <Group justify="space-between" align="center">
+              <Text size="sm" fw={500}>Message</Text>
+              <Button
+                size="xs"
+                variant="light"
+                leftSection={<IconSparkles size={14} />}
+                onClick={handleGenerateCoverLetter}
+                loading={generating}
+                disabled={sending}
+              >
+                {message ? "Regenerate with AI" : "Generate with AI"}
+              </Button>
+            </Group>
+
+            <Textarea
+              placeholder="Write your cover letter here..."
+              minRows={5}
+              maxRows={15}
+              autosize
+              maxLength={3000}
+              value={message}
+              onChange={(e) => setMessage(e.currentTarget.value)}
+            />
+          </Stack>
           <Button 
             fullWidth 
             onClick={submitApplication} 
             loading={sending}
+            disabled={generating}
             leftSection={<IconSend size={16} />}
           >
             Send Application

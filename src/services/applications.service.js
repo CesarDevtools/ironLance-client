@@ -10,6 +10,11 @@ class ApplicationsService {
     return this.api.post("/applications", appData);
   }
 
+  // POST /api/jobs/:jobId/cover-letter - Generar cover letter con IA
+  generateCoverLetter(jobId) {
+    return this.api.post(`/jobs/${jobId}/cover-letter`, {});
+  }
+
   // GET /api/my-applications - Mis aplicaciones enviadas
   getMyApplications() {
     return this.api.get("/my-applications");
